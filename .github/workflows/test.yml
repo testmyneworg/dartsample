@@ -4,8 +4,19 @@ on: push
 
 jobs:
   super-lint:
-    name: Lint code base
+    name: Run flutter test and analyze
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Get Java Dependency
+        uses: actions/setup-java@v1
+        
+      - name: Get Flutter Action
+        uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
